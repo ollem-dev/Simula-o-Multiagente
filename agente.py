@@ -1,14 +1,10 @@
-import random
 from mesa import Agent
 
 class EstudanteAgent(Agent):
-    # Agora recebemos a 'resiliencia_base' definida pelo slider
     def __init__(self, model, resiliencia_base):
         super().__init__(model)
-        
-        # Cria uma pequena variação (+/- 0.2) em torno da média escolhida, sem passar de 0 ou 1
-        self.resiliencia = random.uniform(max(0.0, resiliencia_base - 0.2), min(1.0, resiliencia_base + 0.2)) 
-        self.competencia_equipe = random.uniform(0.1, 1.0)
+        self.resiliencia = self.model.random.uniform(max(0.0, resiliencia_base - 0.2), min(1.0, resiliencia_base + 0.2)) 
+        self.competencia_equipe = self.model.random.uniform(0.1, 1.0)
         self.estresse = 0.0 
 
     def step(self):
@@ -20,8 +16,8 @@ class EstudanteAgent(Agent):
         
         if colega != self:
             if colega.estresse < 0.5:
-                self.estresse -= (colega.competencia_equipe * 0.05)
-                self.competencia_equipe += 0.01 
+                self.estresse -= (colega.competencia_equipe * 0.15)
+                self.competencia_equipe += 0.02 
             else:
                 self.estresse += 0.05
         
